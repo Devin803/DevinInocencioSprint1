@@ -11,5 +11,17 @@ def get_wufoo_data() -> dict:
         print(f"Failed to get data, response code:{response.status_code} and error message: {response.reason} ")
         sys.exit(-1)
     json_response = response.json()
-    return json_response  # json response will be either a dictionary or a list of dictionaries
-    # each dictionary represents a json object
+    return json_response
+
+
+def save_data():
+    with open('wufoo_data', 'w') as file:
+        file.write(str(get_wufoo_data()))
+
+
+def main():
+    save_data()
+
+
+if __name__ == '__main__':
+    main()

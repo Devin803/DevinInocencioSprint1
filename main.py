@@ -15,7 +15,7 @@ def get_wufoo_data() -> dict:
 
 
 def save_data():
-    with open('wufoo_data', 'w') as file:
+    with open('wufoo_data.txt', 'w') as file:
         file.write(str(get_wufoo_data()))
 
 

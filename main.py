@@ -2,6 +2,8 @@ import sys
 import requests
 from secrets import wufoo_key
 from requests.auth import HTTPBasicAuth
+import sqlite3
+from typing import Tuple
 
 
 def get_wufoo_data() -> dict:
@@ -14,6 +16,17 @@ def get_wufoo_data() -> dict:
     return json_response
 
 
+def open_db(filename: str) -> Tuple[sqlite3.Connection, sqlite3.Cursor]:
+    db_connection = sqlite3.connect(filename)  # connect to existing DB or create new one
+    cursor = db_connection.cursor()  # get ready to read/write data
+    return db_connection, cursor
+
+
+def close_db(connection: sqlite3.Connection):
+    connection.commit()  # make sure any changes get saved
+    connection.close()
+
+
 def save_data():
     with open('wufoo_data.txt', 'w') as file:
         file.write(str(get_wufoo_data()))
@@ -21,6 +34,7 @@ def save_data():
 
 def main():
     save_data()
+    open_db("wufoo_db.sqlite")
 
 
 if __name__ == '__main__':

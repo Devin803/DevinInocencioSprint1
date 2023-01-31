@@ -4,7 +4,9 @@ import api_data
 
 def main():
     api_data.save_data()
-    database_data.open_db("wufoo_db.sqlite")
+    conn, cursor = database_data.open_db("wufoo_db.sqlite")
+    print(type(conn))
+    database_data.close_db(conn)
 
 
 if __name__ == '__main__':

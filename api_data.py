@@ -15,5 +15,11 @@ def get_wufoo_data() -> dict:
 
 
 def save_data():
-    with open('wufoo_data.txt', 'w') as file:
-        file.write(str(get_wufoo_data()))
+    entry_data = get_wufoo_data()['Entries']
+    with open("wufoo_data.txt", "w") as file:
+        for item in entry_data:
+            for key, value in item.items():
+                if value == "":
+                    continue
+                else:
+                    file.write(f"{key}:{value}\n")

@@ -7,7 +7,7 @@ from typing import Tuple
 
 
 def get_wufoo_data() -> dict:
-    url = "https://devin803.wufoo.com/api/v3/forms/cubes-project-proposal-submission/entries/json"
+    url = "https://jsantore.wufoo.com/api/v3/forms/cubes-project-proposal-submission/entries/json"
     response = requests.get(url, auth=HTTPBasicAuth(wufoo_key, 'pass'))
     if response.status_code != 200:  # if we don't get an ok response we have trouble
         print(f"Failed to get data, response code:{response.status_code} and error message: {response.reason} ")
@@ -22,7 +22,7 @@ def open_db(filename: str) -> Tuple[sqlite3.Connection, sqlite3.Cursor]:
     return db_connection, cursor
 
 
-def close_db(connection: sqlite3.Connection):
+def close_db(connection: sqlite3.Connection):  # add comment to test workflow
     connection.commit()  # make sure any changes get saved
     connection.close()
 

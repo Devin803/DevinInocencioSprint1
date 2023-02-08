@@ -14,6 +14,7 @@ def get_wufoo_data() -> dict:
     return json_response
 
 
+# Saves the wufoo form and places into a txt file
 def save_data():
     entry_data = get_wufoo_data()['Entries']
     with open("wufoo_data.txt", "w") as file:

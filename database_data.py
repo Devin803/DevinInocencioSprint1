@@ -1,3 +1,4 @@
+import json
 from typing import Tuple
 import sqlite3
 import api_data
@@ -22,6 +23,7 @@ def setup_db(cursor: sqlite3.Cursor):
                       Title TEXT NOT NULL,
                       Company TEXT NOT NULL,
                       Email TEXT NOT NULL,
+                      Organization_Website TEXT NOT NULL,
                       Phone_Number INTEGER DEFAULT 0,
                       Opportunities TEXT,
                       Time_Period TEXT,
@@ -31,8 +33,22 @@ def setup_db(cursor: sqlite3.Cursor):
                       Updated_By TEXT);''')
 
 
-data_from_form = api_data.get_wufoo_data()
-
-#for item in data_from_form:
-
-
+def populate_db(cursor: sqlite3.Cursor):
+    form_data = api_data.get_wufoo_data()
+    for item in form_data['Entries']:
+        cursor.execute(f'''INSERT INTO wufoo_form VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
+                       (item['EntryId'],
+                        item.get('Field17', ''),
+                        item.get('Field18', ''),
+                        item.get('Field4', ''),
+                        item.get('Field7', ''),
+                        item.get('Field20', ''),
+                        item.get('Field8', ''),
+                        item.get('Field9', ''),
+                        item.get('Field23', ''),
+                        item.get('Field121', ''),
+                        item.get('Field224', ''),
+                        item.get('DateCreated', ''),
+                        item.get('CreatedBy', ''),
+                        item.get('UpdatedBy', '')))
+    cursor.connection.commit()

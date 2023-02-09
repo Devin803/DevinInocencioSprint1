@@ -1,4 +1,3 @@
-import json
 from typing import Tuple
 import sqlite3
 import api_data
@@ -36,7 +35,7 @@ def setup_db(cursor: sqlite3.Cursor):
 def populate_db(cursor: sqlite3.Cursor):
     form_data = api_data.get_wufoo_data()
     for item in form_data['Entries']:
-        cursor.execute(f'''INSERT INTO wufoo_form VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
+        cursor.execute(f'''INSERT OR IGNORE INTO wufoo_form VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
                        (item['EntryId'],
                         item.get('Field17', ''),
                         item.get('Field18', ''),

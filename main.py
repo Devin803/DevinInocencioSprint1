@@ -8,7 +8,6 @@ def main():
     print(type(conn))
     database_data.setup_db(cursor)
     database_data.populate_db(cursor)
-    database_data.close_db(cursor)
 
 
 if __name__ == '__main__':

@@ -37,6 +37,7 @@ def setup_db(cursor: sqlite3.Cursor):
 # Populates the database with wufoo form data
 def populate_db(cursor: sqlite3.Cursor):
     form_data = api_data.get_wufoo_data()
+    cursor.execute(f''' DELETE FROM wufoo_form''')  # Deletes the wufoo table to ensure there's no leftover data
     try:
         for item in form_data['Entries']:
             cursor.execute(f'''INSERT INTO wufoo_form VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
@@ -54,10 +55,8 @@ def populate_db(cursor: sqlite3.Cursor):
                             item.get('DateCreated', ''),
                             item.get('CreatedBy', ''),
                             item.get('UpdatedBy', '')))
-        cursor.connection.commit()
-        cursor.connection.close()
     except sqlite3.Error as error:
-        print(f'Database error occurred {error}')  # Currently gives me an error, but still runs the code correctly
+        print(f'Database error occurred {error}')
     finally:
         cursor.connection.commit()
         if cursor.connection:

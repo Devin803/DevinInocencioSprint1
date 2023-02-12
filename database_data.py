@@ -40,6 +40,9 @@ def populate_db(cursor: sqlite3.Cursor):
     cursor.execute(f''' DELETE FROM wufoo_form''')  # Deletes the wufoo table to ensure there's no leftover data
     try:
         for item in form_data['Entries']:
+            opportunities = ','.join([item.get('Field21', ''), item.get('Field22', ''), item.get('Field23', ''),
+                                      item.get('Field24', ''), item.get('Field25', ''), item.get('Field26', ''),
+                                      item.get('Field27', '')])
             cursor.execute(f'''INSERT INTO wufoo_form VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
                            (item['EntryId'],
                             item.get('Field17', ''),
@@ -49,8 +52,12 @@ def populate_db(cursor: sqlite3.Cursor):
                             item.get('Field20', ''),
                             item.get('Field8', ''),
                             item.get('Field9', ''),
-                            item.get('Field23', ''),
-                            item.get('Field121', ''),
+                            opportunities,
+                            ','.join([item.get('Field121', ''),
+                                      item.get('Field122', ''),
+                                      item.get('Field123', ''),
+                                      item.get('Field124', ''),
+                                      item.get('Field125', '')]),
                             item.get('Field224', ''),
                             item.get('DateCreated', ''),
                             item.get('CreatedBy', ''),

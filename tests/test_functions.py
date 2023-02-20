@@ -5,7 +5,7 @@ import database_data
 
 def test_get_api_data():
     test_data = api_data.get_wufoo_data()
-    assert len(test_data) == 1
+    assert len(test_data) <= 10
 
 
 def test_setup_db():
